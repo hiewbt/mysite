@@ -2,6 +2,8 @@ from django.shortcuts import render
 from catalog.models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import permission_required
+
 
 # Create your views here.
 def index(request):
@@ -45,3 +47,6 @@ class BookDetailView(generic.DetailView):
 def book_detail_view(request, primary_key):
     book = get_object_or_404(Book, pk=primary_key)
     return render(request, 'catalog/book_detail.html', context={'book': book})
+
+class LoanedBooksByUserListView(generic.ListView):
+    model = BookInstance
