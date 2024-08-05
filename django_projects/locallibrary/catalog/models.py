@@ -3,6 +3,8 @@ from django.urls import reverse # Used to generate URLs by reversing the URL pat
 import uuid # Required for unique book instances
 from django.utils.translation import gettext_lazy as _
 
+from .constants import LOAN_STATUS
+
 # Create your models here.
 class Genre(models.Model):
     """Model representing a book genre."""
@@ -35,12 +37,6 @@ class BookInstance(models.Model):
     book = models.ForeignKey('Book', on_delete=models.RESTRICT)
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
-    LOAN_STATUS = (
-        ('m', 'Maintenance'),
-        ('o', 'On loan'),
-        ('a', 'Available'),
-        ('r', 'Reserved'),
-    )
     status = models.CharField(
         max_length=1,
         choices=LOAN_STATUS,
